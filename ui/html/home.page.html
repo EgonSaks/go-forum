@@ -1,0 +1,61 @@
+{{template "base" .}}
+
+{{define "title"}}Home{{end}}
+
+{{define "main"}}
+    {{with .}}
+
+        <div class="filters">
+
+        <h2>Latest posts</h2>  
+            <form action='/filter' method='POST'>
+              {{ if .IsLoggedIn}}
+                <label for="date-filter">Date:</label>
+                <input type="date" id="date-filter" name="date-filter">
+
+                <label for="likes-filter">Likes:</label>
+                <select id="likes-filter" multiple name="likes-filter">
+                    <option value="-1">All Likes</option>
+                    <option value="0">0</option>
+                    <option value="1">1+</option>
+                    <option value="5">5+</option>
+                    <option value="10">10+</option>
+                </select>  
+            {{end}} 
+                <label for="category-filter">Category:</label>
+                <select id="category-filter" multiple name="category-filter" >
+                    <option value="all_categories">All Categories</option>
+                    <option value="category1">Category 1</option>
+                    <option value="category2">Category 2</option>
+                    <option value="category3">Category 3</option>
+                    <option value="category4">Category 4</option>
+                    <option value="category5">Category 5</option>
+                </select>
+            
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Reactions</th>
+                <th>Comments</th>
+                <th>Category</th>
+                <th>Created</th>           
+            </tr>
+        {{range .Posts}}
+            <tr>
+                <td><a href='/post?id={{.ID}}'>{{.Title}}</a></td>
+                <td>{{ .Likes}} &#x1F53A; {{ .Dislikes }} &#x1F53B;</td>
+                <td>{{ .CommentsCount}} &#x1F4AC;</td>
+                <td>{{ .Category }}</td>
+                <td>{{.CreatedAt | humanDate }}</td>
+            </tr>
+        {{end}}
+        </table>
+    {{else}}
+        <p>There's nothing to see here... yet!</p>
+    {{end}}
+{{end}}
+

@@ -1,0 +1,24 @@
+{{template "base" .}}
+
+{{define "title"}}Profile page{{end}}
+
+{{define "main"}}
+   
+    <div class="profile"> 
+        <h3><a href='/user/profile'>Profile</a></h3>
+        <h3><a href='/user/profile/posts'>Posts</a> </h3>   
+        <h3><a href='/user/profile/comments'>Comments</a>  </h3>  
+        <h3><a href='/user/profile/post/reactions'>Post reactions</a> </h3>   
+        <h3><a href='/user/profile/comment/reactions'>Comment reactions</a> </h3>    
+        <h3><a href='/user/profile/activity'>All activity</a></h3>
+    </div>
+    <br>
+    <div>
+        {{ with .}}
+            <p>Hello <strong>{{.LoggedInUser.Name}}</strong></p>
+        {{end}}
+        <br>
+        <p>This is your profile page where you can find summary of your activity on the forum! You can find your posts, comments post reactions and comment reactions or whole activity on the forum from links above</p>
+    </div>
+{{end}}
+

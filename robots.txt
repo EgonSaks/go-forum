@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /configs/
+Disallow: /tls/
+Disallow: /ui/static/uploads/
+Disallow: /utils/

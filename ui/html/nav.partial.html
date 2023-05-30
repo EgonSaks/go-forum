@@ -1,0 +1,33 @@
+{{define "nav"}}
+
+ <nav>
+        <div>
+            <a href='/'>Home</a> 
+            {{ if ne .CurrentPage "/post/create" }}
+                {{with .FormErrors.search}}
+                    <label class='error'>{{.}}</label>
+                {{end}}
+                <div class="search">
+                    <form action="/search">
+                        <input type="text" placeholder="Search" name="search">
+                        <button>Search <span>&#x1F50D;</span></button>
+                    </form>
+                </div>
+            {{ end }}
+            {{ if .IsLoggedIn}}
+                   
+                {{ if eq .CurrentPage "/post/create" }}
+                    <a href='/user/logout'>Log Out {{ .LoggedInUser.Name }}</a>
+                {{ else }}
+                    <a href='/post/create'>Create post</a>
+                    <a href='/user/profile'>Profile</a>
+                    <a href='/user/logout'>Log Out {{ .LoggedInUser.Name }} </a>
+                    
+                {{ end }}
+            {{else}}
+                <a href='/user/signup'>Sign Up</a>
+                <a href='/user/login'>Log In</a>
+            {{end}}
+        </div>            
+</nav>
+{{end}}

@@ -1,0 +1,38 @@
+{{template "base" .}}
+
+{{define "title"}}User reactions to comments{{end}}
+
+{{define "main"}}
+   
+    <div class="profile"> 
+        <h3><a href='/user/profile'>Profile</a></h3>
+        <h3><a href='/user/profile/posts'>Posts</a> </h3>   
+        <h3><a href='/user/profile/comments'>Comments</a>  </h3>  
+        <h3><a href='/user/profile/post/reactions'>Post reactions</a> </h3>   
+        <h3><a href='/user/profile/comment/reactions'>Comment reactions</a> </h3>    
+        <h3><a href='/user/profile/activity'>All activity</a></h3>
+    </div>
+    <br>
+    <h1>Comment Reactions</h1>
+    <br>     
+    {{if not .UserLikedDislikedComments}}
+       <p>You haven't reacted to any comments yet.</p>
+    {{else}}
+        <table>
+            <tr>
+                <th>Post</th>
+                <th>Comment</th>
+                <th>Reaction</th>      
+            </tr>
+            {{range .UserLikedDislikedComments}}
+                <tr>
+                    <td>{{.PostTitle}}</td>
+                    <td>{{.Content}}</td>
+                    <td>{{.Likes}}  &#x1F53A; {{.Dislikes}} &#x1F53B;</td>
+                </tr>    
+            {{end}}
+        </table>
+    {{end}}
+
+{{end}}
+

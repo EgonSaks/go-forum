@@ -1,0 +1,87 @@
+{{template "base" .}}
+
+{{define "title"}}Post #{{.Post.Title}}{{end}}
+
+{{define "main"}}
+    {{ with . }}
+        <div class='post'>
+
+            <div class='metadata'>
+                <strong>{{.Post.Title}}</strong>
+                <span>Category: {{ .Post.Category }}</span>
+            </div>
+            <p>{{.Post.Content}}</p>
+            {{ if .Post.ImageFullPath }}
+            <img class="postImage" src="/{{.Post.ImageFullPath}}">
+            {{ end }}
+            <div class='metadata'> 
+                <time>{{.Post.CreatedAt | humanDate}}</time>  
+                <span>Created by: {{.Post.User.Name}} </span>   
+            </div>
+
+            <div class='reaction'>  
+                {{ if .IsLoggedIn }}
+                    <form method='POST' action='/post/reaction'> 
+                        <input type='hidden' name='post_id' value='{{ .Post.ID }}'>
+                        <button type='submit' name='reaction_type' value='like'> {{ .PostLikes}} &#x1F53A;</button>
+                        <button type='submit' name='reaction_type' value='dislike'> {{ .PostDislikes}} &#x1F53B;</button>
+                    </form>
+                {{ else }}
+                    <button disabled>{{ .PostLikes}} &#x1F53A;</button>
+                    <button disabled>{{ .PostDislikes}} &#x1F53B;</button>
+                {{ end }}
+                <span>{{ .CommentsCount}} &#x1F4AC;</span>
+            </div>
+
+        </div>
+
+
+        {{ if .IsLoggedIn }}
+            <form action='/post/comment' method='POST'>
+                <input type='hidden' name='post_id' value='{{ .Post.ID }}'>
+                {{with .FormErrors.comment}}
+                 <label class='error'>{{.}}</label>
+                {{end}}  
+                <div class='comment'>
+                    <div class='metadata'>  
+                        <textarea name='comment'></textarea>
+                    </div>
+                    <input type='submit' value='Add comment'>
+                </div>
+            </form>
+        {{end}}
+
+    {{end}}
+
+    {{ with .Comments}}
+        {{if . }}
+            {{range .}}
+                <div class='comment'>
+                    <p>{{.Content}}</p>
+                    <div class='metdata'>
+                        <span>Created by: {{.User.Name}}</span>   
+                        <time>{{.CreatedAt | humanDate}}</time>   
+
+                        <div class='reaction'> 
+                        {{ if .IsLoggedIn }}
+                            <form method='POST' action='/post/comment/reaction'> 
+                                <input type='hidden' name='post_id' value='{{ .Post.ID }}'>
+                                <input type='hidden' name='comment_id' value='{{ .ID }}'>
+                                <button type='submit' name='reaction_type' value='like'> {{.Likes}} &#x1F53A;</button> 
+                                <button type='submit' name='reaction_type' value='dislike'> {{.Dislikes}} &#x1F53B;</button>
+                            </form>
+                        {{ else }}
+                                <button disabled> {{.Likes}} &#x1F53A;</button>
+                                <button disabled> {{.Dislikes}} &#x1F53B;</button>
+                        {{ end }}
+
+                        </div>
+                    </div>
+                </div>
+            {{end}}
+        {{end}}
+    {{end}}
+
+{{end}}
+
+

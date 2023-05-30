@@ -1,0 +1,60 @@
+{{template "base" .}}
+
+{{define "title"}}Login{{end}}
+
+{{define "main"}}
+
+<div class="box">
+    <form action='/user/login' method='POST' novalidate>
+        <div>
+            {{with .FormErrors.generic}}
+                <div class='error'>{{.}}</div>
+            {{end}}
+            <label>Email:</label>
+            {{with .FormErrors.email}}
+                <label class='error'>{{.}}</label>
+            {{end}}
+            <input type='email' name='email' value='{{.FormData.Get "email"}}'>
+        </div>
+        <div>
+            <label>Password:</label>
+            {{with .FormErrors.password}}
+                <label class='error'>{{.}}</label>
+            {{end}}
+            <input type='password' name='password'>
+        </div>
+    
+        <div class="login">
+            <input  type='submit' value='Login'>
+        </div>
+       
+    </form>
+    
+    <div class="strike">
+        <span>or</span>
+    </div>
+
+    <div class='auth'>
+        <a href="/login/google">
+            <button class='google'>
+                <img src="/static/img/logos/google.png" />
+                <span>Continue with Google</span>
+            </button>
+        </a>    
+    </div>
+
+    <div class='auth'>
+        <a href="/login/github">     
+            <button class='github'>
+                <img src="/static/img/logos/github.png" />
+                <span>Continue with Github</span>
+            </button>
+        </a>
+    </div>
+
+    <div class="centered-text">
+        <p>Don't have an account? <a href="/user/signup"><strong>Sign up</strong></a></p>
+    </div>
+    
+</div>
+{{end}}

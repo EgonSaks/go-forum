@@ -1,0 +1,36 @@
+{{template "base" .}}
+
+{{define "title"}}User comments page{{end}}
+
+{{define "main"}}
+   
+    <div class="profile"> 
+        <h3><a href='/user/profile'>Profile</a></h3>
+        <h3><a href='/user/profile/posts'>Posts</a> </h3>   
+        <h3><a href='/user/profile/comments'>Comments</a>  </h3>  
+        <h3><a href='/user/profile/post/reactions'>Post reactions</a> </h3>   
+        <h3><a href='/user/profile/comment/reactions'>Comment reactions</a> </h3>    
+        <h3><a href='/user/profile/activity'>All activity</a></h3>
+    </div>
+    <br>
+    <h1>Comments</h1>
+    <br>         
+    {{if not .Comments}}
+        <p>You haven't made any comments yet.</p>
+    {{else}}
+        <table>
+            <tr>
+                <th>Post</th>
+                <th>Comments</th>      
+            </tr>
+            {{range .Comments}}
+                <tr>
+                    <td>{{.Post.Title}}</td>
+                    <td>{{.Content}}</td>
+                </tr>    
+            {{end}}
+        </table>
+    {{end}}
+
+{{end}}
+

@@ -1,0 +1,47 @@
+{{template "base" .}}
+
+{{define "title"}}Signup{{end}}
+
+{{define "main"}}
+
+<div class="box">
+    <form action='/user/signup' method='POST' novalidate>
+
+        <div>
+            <label>Name:</label>
+            {{with .FormErrors.name}}
+                <label class='error'>{{.}}</label>
+            {{end}}
+            <input type='text' name='name' value='{{.FormData.Get "name"}}'>
+        </div>
+    
+        <div>
+            <label>Email:</label>
+            {{with .FormErrors.email}}
+                <label class='error'>{{.}}</label>
+            {{end}}
+            <input type='email' name='email' value='{{.FormData.Get "email"}}'>
+        </div>
+    
+        <div>
+            <label>Password:</label>
+            {{with .FormErrors.password}}
+                <label class='error'>{{.}}</label>
+            {{end}}
+            <input type='password' name='password'>
+        </div>
+    
+        <div class="signup">
+            <input type='submit' value='Sign Up'>
+        </div>
+      
+    </form>
+
+    <div class="centered-text">
+        <p> Already have an account? <a href="/user/login"><strong>Log in</strong></a></p>    
+    </div>
+    
+  
+</div>
+
+{{end}}
